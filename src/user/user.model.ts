@@ -14,6 +14,9 @@ export class User {
   @Field()
   @Prop({ required: true })
   name: string;
+
+  @Field()
+  todosCount?: number; 
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

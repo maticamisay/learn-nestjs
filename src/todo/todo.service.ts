@@ -13,6 +13,10 @@ export class TodoService {
     return this.todoModel.find().exec();
   }
 
+  async findAllByUserId(userId: string): Promise<Todo[]> {
+    return this.todoModel.find({ userId }).exec();
+  }
+
   async findOneById(id: string): Promise<Todo> {
     return this.todoModel.findById(id).exec();
   }

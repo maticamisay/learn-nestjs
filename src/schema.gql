@@ -5,6 +5,7 @@
 type User {
   id: String!
   name: String!
+  todosCount: Float!
 }
 
 type Todo {
