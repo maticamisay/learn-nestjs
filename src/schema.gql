@@ -37,7 +37,7 @@ input CreateTodoInput {
 }
 
 input UpdateTodoInput {
-  title: String!
+  title: String
   completed: Boolean
   userId: String
 }

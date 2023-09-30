@@ -2,7 +2,7 @@ import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateTodoInput {
-  @Field()
+  @Field({ nullable: true })
   title?: string;
 
   @Field({ nullable: true })
