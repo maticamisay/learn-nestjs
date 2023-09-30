@@ -8,15 +8,15 @@ export type UserDocument = HydratedDocument<User>;
 @ObjectType()
 @Schema()
 export class User {
-  @Field() 
+  @Field()
   readonly id: string;
-  
+
   @Field()
   @Prop({ required: true })
   name: string;
 
   @Field()
-  todosCount?: number; 
+  todosCount?: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

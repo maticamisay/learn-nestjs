@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Todo } from './todo.model';
-import { CreateTodoInput } from './dto/create-todo.input';
-import { UpdateTodoInput } from './dto/update-todo.input';
+import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { Todo } from "./todo.model";
+import { CreateTodoInput } from "./dto/create-todo.input";
+import { UpdateTodoInput } from "./dto/update-todo.input";
 
 @Injectable()
 export class TodoService {
@@ -32,5 +32,9 @@ export class TodoService {
 
   async delete(id: string): Promise<Todo> {
     return this.todoModel.findByIdAndRemove(id).exec();
-  }  
+  }
+
+  async removeTodosByUserId(userId: string) {
+    return this.todoModel.deleteMany({ userId: userId }).exec();
+  }
 }
