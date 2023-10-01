@@ -26,6 +26,8 @@ type Todo {
 
 type AuthPayload {
   accessToken: String!
+  name: String!
+  role: String!
 }
 
 type TipOfDay {

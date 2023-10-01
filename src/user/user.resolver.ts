@@ -68,6 +68,8 @@ export class UserResolver {
     if (!user) {
       throw new UnauthorizedException();
     }
-    return this.authService.login(user);
+    const loginData = await this.authService.login(user);
+    console.log(loginData);
+    return loginData;
   }
 }
