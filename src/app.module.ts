@@ -7,6 +7,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { join } from "path";
 import { TodoModule } from "./todo/todo.module";
 import { UserModule } from "./user/user.module";
+import { TipofdayModule } from './tipofday/tipofday.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UserModule } from "./user/user.module";
     MongooseModule.forRoot(process.env.DB_URI),
     TodoModule,
     UserModule,
+    TipofdayModule,
   ],
 })
 export class AppModule {}

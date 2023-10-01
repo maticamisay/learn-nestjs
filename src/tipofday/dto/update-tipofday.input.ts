@@ -1,13 +1,10 @@
 import { Field, InputType } from "@nestjs/graphql";
 
 @InputType()
-export class UpdateUserInput {
+export class UpdateTipOfDayInput {
   @Field({ nullable: true })
-  name?: string;
+  title?: string;
 
   @Field({ nullable: true })
-  password?: string;
-
-  @Field({ nullable: true })
-  role?: string;
+  description?: string;
 }

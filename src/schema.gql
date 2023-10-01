@@ -6,7 +6,15 @@ type User {
   id: String!
   name: String!
   password: String!
+  role: RoleType!
   todosCount: Float!
+}
+
+"""Different types of roles available"""
+enum RoleType {
+  ADMIN
+  USER
+  GUEST
 }
 
 type Todo {
@@ -20,11 +28,25 @@ type AuthPayload {
   accessToken: String!
 }
 
+type TipOfDay {
+  id: String!
+  title: String!
+  description: String!
+  createdAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Query {
   todos: [Todo!]!
   getTodo(id: String!): Todo!
   users: [User!]!
   user(id: String!): User!
+  allTipsOfDay: [TipOfDay!]!
+  getTip(id: String!): TipOfDay
 }
 
 type Mutation {
@@ -35,6 +57,9 @@ type Mutation {
   updateUser(id: String!, input: UpdateUserInput!): User!
   deleteUser(id: String!): User!
   login(name: String!, password: String!): AuthPayload!
+  createTipOfDay(input: CreateTipOfDayInput!): TipOfDay!
+  updateTipOfDay(id: String!, data: UpdateTipOfDayInput!): TipOfDay!
+  deleteTipOfDay(id: String!): TipOfDay!
 }
 
 input CreateTodoInput {
@@ -51,9 +76,21 @@ input UpdateTodoInput {
 input CreateUserInput {
   name: String!
   password: String!
+  role: String!
 }
 
 input UpdateUserInput {
   name: String
   password: String
+  role: String
+}
+
+input CreateTipOfDayInput {
+  title: String!
+  description: String!
+}
+
+input UpdateTipOfDayInput {
+  title: String
+  description: String
 }
