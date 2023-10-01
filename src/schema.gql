@@ -40,7 +40,6 @@ type Mutation {
 input CreateTodoInput {
   title: String!
   completed: Boolean = false
-  userId: String!
 }
 
 input UpdateTodoInput {

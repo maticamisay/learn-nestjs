@@ -45,10 +45,11 @@ export class TodoResolver {
     @Args("input") input: CreateTodoInput,
     @CurrentUser() user: User
   ): Promise<Todo> {
-    return this.todoService.create(input);
+    return this.todoService.create(input, user.id);
   }
 
   @Mutation((returns) => Todo)
+  @UseGuards(GqlAuthGuard)
   async updateTodo(
     @Args("id") id: string,
     @Args("input") input: UpdateTodoInput
@@ -57,6 +58,7 @@ export class TodoResolver {
   }
 
   @Mutation((returns) => Todo)
+  @UseGuards(GqlAuthGuard)
   async deleteTodo(@Args("id") id: string): Promise<Todo> {
     return this.todoService.delete(id);
   }

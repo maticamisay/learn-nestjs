@@ -7,7 +7,4 @@ export class CreateTodoInput {
 
   @Field({ nullable: true, defaultValue: false })
   completed?: boolean;
-
-  @Field()
-  userId: string;
 }

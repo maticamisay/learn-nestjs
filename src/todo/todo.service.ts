@@ -21,8 +21,8 @@ export class TodoService {
     return this.todoModel.findById(id).exec();
   }
 
-  async create(input: CreateTodoInput): Promise<Todo> {
-    const newTodo = new this.todoModel(input);
+  async create(input: CreateTodoInput, userId: string): Promise<Todo> {
+    const newTodo = new this.todoModel({ ...input, userId });
     return newTodo.save();
   }
 

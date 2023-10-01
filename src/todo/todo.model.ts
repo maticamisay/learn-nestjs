@@ -8,9 +8,9 @@ export type TodoDocument = HydratedDocument<Todo>;
 @ObjectType()
 @Schema()
 export class Todo {
-  @Field() 
+  @Field()
   readonly id: string;
-  
+
   @Field()
   @Prop({ required: true })
   title: string;
@@ -19,8 +19,8 @@ export class Todo {
   @Prop({ default: false })
   completed: boolean;
 
-  @Field(type => User)
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  @Field((type) => User)
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "User", required: true })
   userId: User;
 }
 

@@ -11,9 +11,10 @@ import { UserService } from "./user.service";
 import { CreateUserInput } from "./dto/create-user.input";
 import { UpdateUserInput } from "./dto/update-user.input";
 import { TodoService } from "src/todo/todo.service";
-import { UnauthorizedException } from "@nestjs/common";
+import { UnauthorizedException, UseGuards } from "@nestjs/common";
 import { AuthService } from "src/auth/auth.service";
 import { AuthPayload } from "src/auth/auth-payload.dto";
+import { GqlAuthGuard } from "src/auth/gql-auth.guard";
 
 @Resolver((of) => User)
 export class UserResolver {
@@ -47,6 +48,7 @@ export class UserResolver {
   }
 
   @Mutation((returns) => User)
+  @UseGuards(GqlAuthGuard)
   async deleteUser(@Args("id") id: string): Promise<User> {
     return this.userService.remove(id);
   }
