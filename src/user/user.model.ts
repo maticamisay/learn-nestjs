@@ -15,6 +15,10 @@ export class User {
   name: string;
 
   @Field()
+  @Prop({ required: true })
+  password: string;
+
+  @Field()
   todosCount?: number;
 }
 

@@ -1,6 +1,11 @@
-import { Injectable } from "@nestjs/common";
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import * as bcrypt from "bcrypt";
 import { User, UserDocument } from "./user.model";
 import { CreateUserInput } from "./dto/create-user.input";
 import { UpdateUserInput } from "./dto/update-user.input";
@@ -14,7 +19,8 @@ export class UserService {
   ) {}
 
   async create(input: CreateUserInput): Promise<User> {
-    const user = new this.userModel(input);
+    const hashedPassword = await bcrypt.hash(input.password, 10);
+    const user = new this.userModel({ ...input, password: hashedPassword });
     return user.save();
   }
 
@@ -26,7 +32,14 @@ export class UserService {
     return this.userModel.findById(id).exec();
   }
 
+  async findByUsername(username: string): Promise<User> {
+    return this.userModel.findOne({ username }).exec();
+  }
+
   async update(id: string, input: UpdateUserInput): Promise<User> {
+    if (input.password) {
+      input.password = await bcrypt.hash(input.password, 10);
+    }
     return this.userModel.findByIdAndUpdate(id, input, { new: true }).exec();
   }
 
@@ -38,5 +51,19 @@ export class UserService {
       return user;
     }
     throw new Error("User not found");
+  }
+
+  async validateUser(username: string, pass: string): Promise<User> {
+    const user = await this.findByUsername(username);
+    if (!user) {
+      throw new NotFoundException("User not found");
+    }
+
+    const isValid = await bcrypt.compare(pass, user.password);
+    if (!isValid) {
+      throw new BadRequestException("Invalid credentials");
+    }
+
+    return user;
   }
 }
