@@ -32,8 +32,9 @@ export class UserService {
     return this.userModel.findById(id).exec();
   }
 
-  async findByUsername(username: string): Promise<User> {
-    return this.userModel.findOne({ username }).exec();
+  async findByUsername(name: string): Promise<User> {
+    const user = this.userModel.findOne({ name });
+    return user;
   }
 
   async update(id: string, input: UpdateUserInput): Promise<User> {

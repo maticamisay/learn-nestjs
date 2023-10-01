@@ -15,6 +15,7 @@ import { UserModule } from "./user/user.module";
       autoSchemaFile: join(process.cwd(), "src/schema.gql"),
       playground: true,
       driver: ApolloDriver,
+      context: ({ req }) => ({ req }),
     }),
     JwtModule.register({
       secret: "YOUR_SECRET_KEY",

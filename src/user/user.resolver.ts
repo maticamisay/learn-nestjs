@@ -13,6 +13,7 @@ import { UpdateUserInput } from "./dto/update-user.input";
 import { TodoService } from "src/todo/todo.service";
 import { UnauthorizedException } from "@nestjs/common";
 import { AuthService } from "src/auth/auth.service";
+import { AuthPayload } from "src/auth/auth-payload.dto";
 
 @Resolver((of) => User)
 export class UserResolver {
@@ -56,14 +57,12 @@ export class UserResolver {
     return todos.length;
   }
 
-  // user.resolver.ts
-
-  @Mutation((returns) => String)
+  @Mutation((returns) => AuthPayload)
   async login(
-    @Args("username") username: string,
+    @Args("name") name: string,
     @Args("password") password: string
-  ) {
-    const user = await this.authService.validateUser(username, password);
+  ): Promise<AuthPayload> {
+    const user = await this.authService.validateUser(name, password);
     if (!user) {
       throw new UnauthorizedException();
     }
