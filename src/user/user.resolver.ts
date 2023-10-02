@@ -15,6 +15,7 @@ import { UnauthorizedException, UseGuards } from "@nestjs/common";
 import { AuthService } from "src/auth/auth.service";
 import { AuthPayload } from "src/auth/auth-payload.dto";
 import { GqlAuthGuard } from "src/auth/gql-auth.guard";
+import { CurrentUser } from "src/common/decorators/current-user.decorator";
 
 @Resolver((of) => User)
 export class UserResolver {
@@ -66,10 +67,15 @@ export class UserResolver {
   ): Promise<AuthPayload> {
     const user = await this.authService.validateUser(name, password);
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException("Invalid credentials");
     }
     const loginData = await this.authService.login(user);
-    console.log(loginData);
     return loginData;
+  }
+
+  @Mutation((returns) => AuthPayload)
+  @UseGuards(GqlAuthGuard)
+  async revalidateToken(@CurrentUser() user: User): Promise<AuthPayload> {
+    return this.authService.login(user);
   }
 }

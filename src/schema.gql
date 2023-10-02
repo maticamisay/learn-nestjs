@@ -59,6 +59,7 @@ type Mutation {
   updateUser(id: String!, input: UpdateUserInput!): User!
   deleteUser(id: String!): User!
   login(name: String!, password: String!): AuthPayload!
+  revalidateToken: AuthPayload!
   createTipOfDay(input: CreateTipOfDayInput!): TipOfDay!
   updateTipOfDay(id: String!, data: UpdateTipOfDayInput!): TipOfDay!
   deleteTipOfDay(id: String!): TipOfDay!
@@ -78,7 +79,7 @@ input UpdateTodoInput {
 input CreateUserInput {
   name: String!
   password: String!
-  role: String!
+  role: String = "USER"
 }
 
 input UpdateUserInput {
